@@ -1,3 +1,4 @@
+
 import turtle
 
 # draw screen
@@ -144,4 +145,5 @@ while True:
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 1
+
 
