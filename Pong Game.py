@@ -195,6 +195,8 @@ while True:
         ball.goto(0, 0)
         ball.dx = -1
         ball.dy = 1
+        os.system("afplay score_up_sound.wav&")
+        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 2
     if ball.xcor() > 370:
@@ -205,3 +207,5 @@ while True:
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 1
+        os.system("afplay score_up_sound.wav&")
+        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
