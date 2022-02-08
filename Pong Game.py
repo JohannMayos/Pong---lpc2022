@@ -1,5 +1,6 @@
 
 import turtle
+import winsound
 
 # draw screen
 screen = turtle.Screen()
@@ -94,12 +95,10 @@ screen.onkeypress(paddle_1_down, "s")
 screen.onkeypress(paddle_2_up, "Up")
 screen.onkeypress(paddle_2_down, "Down")
 
-
 while True:
     screen.update()
 
     # ball movement
-
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
 
@@ -108,25 +107,22 @@ while True:
         ball.sety(290)
         ball.dy *= -1
         ball.dx *= 1
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with lower wall
     if ball.ycor() < -290:
         ball.sety(-290)
         ball.dy *= -1
         ball.dx *= 1
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with left wall
     if ball.xcor() < -330 and paddle_1.ycor() + 50 > ball.ycor() > paddle_1.ycor() - 50:
-        ball.dx *= -1
-
-
-
+        ball.dx *= -1.2
 
     # collision with right wall
     if ball.xcor() > 330 and paddle_2.ycor() + 50 > ball.ycor() > paddle_2.ycor() - 50:
-        ball.dx *= -1
-
-
+        ball.dx *= -1.2
 
     # collision with the paddle 1
     if ball.xcor() < -370:
@@ -134,8 +130,8 @@ while True:
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2), align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
-        ball.dx *= -1
-        ball.dy *= 1
+        ball.dx = -1
+        ball.dy = 1
 
     # collision with the paddle 2
     if ball.xcor() > 370:
@@ -143,7 +139,7 @@ while True:
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2), align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
-        ball.dx *= -1
-        ball.dy *= 1
+        ball.dx = -1
+        ball.dy = 1
 
 
