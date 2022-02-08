@@ -9,6 +9,7 @@ screen.title("Pong")
 screen.bgcolor("black")
 screen.setup(width=800, height=600)
 screen.tracer(0)
+start_button = False
 
 # draw paddle 1
 paddle_1 = turtle.Turtle()
@@ -63,7 +64,7 @@ def paddle_1_up():
     if paddle_1.movingUp:
 
         if y < 250:
-            y += 0.5
+            y += 1
 
     paddle_1.sety(y)
 
@@ -82,7 +83,7 @@ def paddle_1_down():
     if paddle_1.movingDown:
 
         if y > -250:
-            y -= 0.5
+            y -= 1
 
     paddle_1.sety(y)
 
@@ -101,7 +102,7 @@ def paddle_2_up():
     if paddle_2.movingUp:
 
         if y < 250:
-            y += 0.5
+            y += 1
 
     paddle_2.sety(y)
 
@@ -120,7 +121,7 @@ def paddle_2_down():
     if paddle_2.movingDown:
 
         if y > -250:
-            y -= 0.5
+            y -= 1
 
     paddle_2.sety(y)
 
@@ -131,7 +132,6 @@ def paddle_2_set_moving_down_true():
 
 def paddle_2_set_moving_down_false():
     paddle_2.movingDown = False
-
 
 # keyboard
 screen.listen()
@@ -175,19 +175,19 @@ while True:
         os.system("afplay impact_sound.wav&")
 
     # collision with left wall
-    if ball.xcor() < -330 and paddle_1.ycor() + 50 > ball.ycor() > paddle_1.ycor() - 50:
+    if ball.xcor() < -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
         ball.dx *= -1
         os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with right wall
-    if ball.xcor() > 330 and paddle_2.ycor() + 50 > ball.ycor() > paddle_2.ycor() - 50:
+    if ball.xcor() > 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
         ball.dx *= -1
         os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 1
-    if ball.xcor() < -370:
+    if ball.xcor() < -340:
         score_2 += 1
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2),
@@ -199,7 +199,7 @@ while True:
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 2
-    if ball.xcor() > 370:
+    if ball.xcor() > 340:
         score_1 += 1
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2),
