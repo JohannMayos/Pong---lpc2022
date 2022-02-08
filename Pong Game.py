@@ -16,6 +16,8 @@ paddle_1.color("white")
 paddle_1.shapesize(stretch_wid=5, stretch_len=1)
 paddle_1.penup()
 paddle_1.goto(-350, 0)
+paddle_1.movingUp = False
+paddle_1.movingDown = False
 
 # draw paddle 2
 paddle_2 = turtle.Turtle()
@@ -25,6 +27,8 @@ paddle_2.color("white")
 paddle_2.shapesize(stretch_wid=5, stretch_len=1)
 paddle_2.penup()
 paddle_2.goto(350, 0)
+paddle_2.movingUp = False
+paddle_2.movingDown = False
 
 # draw ball
 ball = turtle.Turtle()
@@ -53,50 +57,101 @@ hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
 
 def paddle_1_up():
     y = paddle_1.ycor()
-    if y < 250:
-        y += 30
-    else:
-        y -= 30
+
+    if paddle_1.movingUp:
+
+        if y < 250:
+            y += 0.5
+
     paddle_1.sety(y)
+
+
+def paddle_1_set_moving_up_true():
+    paddle_1.movingUp = True
+
+
+def paddle_1_set_moving_up_false():
+    paddle_1.movingUp = False
 
 
 def paddle_1_down():
     y = paddle_1.ycor()
-    if y > -250:
-        y += -30
-    else:
-        y += 30
+
+    if paddle_1.movingDown:
+
+        if y > -250:
+            y -= 0.5
+
     paddle_1.sety(y)
+
+
+def paddle_1_set_moving_down_true():
+    paddle_1.movingDown = True
+
+
+def paddle_1_set_moving_down_false():
+    paddle_1.movingDown = False
 
 
 def paddle_2_up():
     y = paddle_2.ycor()
-    if y < 250:
-        y += 30
-    else:
-        y -= 30
+
+    if paddle_2.movingUp:
+
+        if y < 250:
+            y += 0.5
+
     paddle_2.sety(y)
+
+
+def paddle_2_set_moving_up_true():
+    paddle_2.movingUp = True
+
+
+def paddle_2_set_moving_up_false():
+    paddle_2.movingUp = False
 
 
 def paddle_2_down():
     y = paddle_2.ycor()
-    if y > -250:
-        y += -30
-    else:
-        y += 30
+
+    if paddle_2.movingDown:
+
+        if y > -250:
+            y -= 0.5
+
     paddle_2.sety(y)
+
+
+def paddle_2_set_moving_down_true():
+    paddle_2.movingDown = True
+
+
+def paddle_2_set_moving_down_false():
+    paddle_2.movingDown = False
 
 
 # keyboard
 screen.listen()
-screen.onkeypress(paddle_1_up, "w")
-screen.onkeypress(paddle_1_down, "s")
-screen.onkeypress(paddle_2_up, "Up")
-screen.onkeypress(paddle_2_down, "Down")
+screen.onkeypress(paddle_1_set_moving_up_true, "w")
+screen.onkeypress(paddle_1_set_moving_down_true, "s")
+screen.onkeyrelease(paddle_1_set_moving_up_false, "w")
+screen.onkeyrelease(paddle_1_set_moving_down_false, "s")
+
+screen.onkeypress(paddle_2_set_moving_up_true, "Up")
+screen.onkeypress(paddle_2_set_moving_down_true, "Down")
+screen.onkeyrelease(paddle_2_set_moving_up_false, "Up")
+screen.onkeyrelease(paddle_2_set_moving_down_false, "Down")
 
 
 while True:
     screen.update()
+
+    # paddles movement
+    paddle_1_up()
+    paddle_1_down()
+    paddle_2_up()
+    paddle_2_down()
 
     # ball movement
 
@@ -119,20 +174,16 @@ while True:
     if ball.xcor() < -330 and paddle_1.ycor() + 50 > ball.ycor() > paddle_1.ycor() - 50:
         ball.dx *= -1
 
-
-
-
     # collision with right wall
     if ball.xcor() > 330 and paddle_2.ycor() + 50 > ball.ycor() > paddle_2.ycor() - 50:
         ball.dx *= -1
-
-
 
     # collision with the paddle 1
     if ball.xcor() < -370:
         score_2 += 1
         hud.clear()
-        hud.write("{} : {}" .format(score_1, score_2), align="center", font=("Press Start 2p", 24, "normal"))
+        hud.write("{} : {}" .format(score_1, score_2),
+                  align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 1
@@ -141,9 +192,8 @@ while True:
     if ball.xcor() > 370:
         score_1 += 1
         hud.clear()
-        hud.write("{} : {}" .format(score_1, score_2), align="center", font=("Press Start 2p", 24, "normal"))
+        hud.write("{} : {}" .format(score_1, score_2),
+                  align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 1
-
-
