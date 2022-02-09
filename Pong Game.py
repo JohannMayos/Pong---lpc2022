@@ -9,7 +9,7 @@ screen.title("Pong")
 screen.bgcolor("black")
 screen.setup(width=800, height=600)
 screen.tracer(0)
-start_button = False
+
 
 # draw paddle 1
 paddle_1 = turtle.Turtle()
@@ -56,6 +56,17 @@ hud.penup()
 hud.hideturtle()
 hud.goto(0, 260)
 hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
+
+
+# starting the game method
+def start_game():
+    ball_movement()
+
+
+# ball movement method
+def ball_movement():
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
 
 
 def paddle_1_up():
@@ -133,12 +144,14 @@ def paddle_2_set_moving_down_true():
 def paddle_2_set_moving_down_false():
     paddle_2.movingDown = False
 
+
 # keyboard
 screen.listen()
 screen.onkeypress(paddle_1_set_moving_up_true, "w")
 screen.onkeypress(paddle_1_set_moving_down_true, "s")
 screen.onkeyrelease(paddle_1_set_moving_up_false, "w")
 screen.onkeyrelease(paddle_1_set_moving_down_false, "s")
+
 
 screen.onkeypress(paddle_2_set_moving_up_true, "Up")
 screen.onkeypress(paddle_2_set_moving_down_true, "Down")
@@ -155,22 +168,19 @@ while True:
     paddle_2_down()
 
     # ball movement
-    ball.setx(ball.xcor() + ball.dx)
-    ball.sety(ball.ycor() + ball.dy)
+    start_game()
 
     # collision with the upper wall
-    if ball.ycor() > 290:
-        ball.sety(290)
+    if ball.ycor() > 280:
+        ball.sety(280)
         ball.dy *= -1
-        ball.dx *= 1
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
         os.system("afplay impact_sound.wav&")
 
     # collision with lower wall
-    if ball.ycor() < -290:
-        ball.sety(-290)
+    if ball.ycor() < -280:
+        ball.sety(-280)
         ball.dy *= -1
-        ball.dx *= 1
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
         os.system("afplay impact_sound.wav&")
 
