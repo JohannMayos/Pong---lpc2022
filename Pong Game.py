@@ -43,8 +43,8 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 0.5
-ball.dy = 0.5
+ball.dx = 0.7
+ball.dy = 0.7
 
 # head-up display
 hud = turtle.Turtle()
@@ -56,6 +56,26 @@ hud.hideturtle()
 hud.goto(0, 260)
 hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
 
+# background up line
+up_line = turtle.Turtle()
+up_line.speed(0)
+up_line.shape("square")
+up_line.color("white")
+up_line.penup()
+up_line.goto(0, 250)
+up_line.shapesize(stretch_wid=0.5, stretch_len=40)
+
+# background middle lines
+middle_lines = []
+
+for i in range(10):
+    middle_lines.append(turtle.Turtle())
+    middle_lines[i].speed(0)
+    middle_lines[i].shape("square")
+    middle_lines[i].color("white")
+    middle_lines[i].penup()
+    middle_lines[i].goto(0, 212 - (i*55))
+    middle_lines[i].shapesize(stretch_wid=2, stretch_len=0.5)
 
 # starting the game method
 def start_game():
@@ -73,7 +93,7 @@ def paddle_1_up():
 
     if paddle_1.movingUp:
 
-        if y < 250:
+        if y < 190:
             y += 1
 
     paddle_1.sety(y)
@@ -111,7 +131,7 @@ def paddle_2_up():
 
     if paddle_2.movingUp:
 
-        if y < 250:
+        if y < 190:
             y += 1
 
     paddle_2.sety(y)
@@ -197,8 +217,8 @@ def render():
     start_game()
 
     # collision with the upper wall
-    if ball.ycor() > 280:
-        ball.sety(280)
+    if ball.ycor() > 240:
+        ball.sety(240)
         ball.dy *= -1
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
         os.system("afplay impact_sound.wav&")
