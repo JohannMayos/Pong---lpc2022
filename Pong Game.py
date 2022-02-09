@@ -56,14 +56,6 @@ hud.hideturtle()
 hud.goto(0, 260)
 hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
 
-# winner crown
-winner = turtle.Turtle()
-winner.speed(0)
-winner.shape("square")
-winner.color("white")
-winner.penup()
-winner.hideturtle()
-
 # background up line
 up_line = turtle.Turtle()
 up_line.speed(0)
@@ -196,6 +188,7 @@ def timer():
     timer.hideturtle()
     timer.goto(0, 0)
 
+    winsound.PlaySound("simple_game_countdown.wav", winsound.SND_ASYNC)
     timer.clear()
     timer.write("3", align="center", font=("Press Start 2P", 40, "normal"))
     time.sleep(1)
@@ -210,19 +203,6 @@ def timer():
     time.sleep(1)
     timer.clear()
 
-
-# change crown position
-def new_score():
-    if paddle_1.score == paddle_2.score:
-        winner.clear()
-    elif paddle_1.score < paddle_2.score:
-        winner.clear()
-        winner.goto(100, 265)
-        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
-    else:
-        winner.clear()
-        winner.goto(-100, 265)
-        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
 
 # render game
 def render():
@@ -249,11 +229,13 @@ def render():
     # collision with paddle_1
     if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
         ball.dx = 1
+        os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with paddle_2
     if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
         ball.dx = -1
+        os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with left wall
@@ -264,9 +246,8 @@ def render():
         hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                   align="center", font=("Press Start 2p", 24, "normal"))
         
+        os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
-
-        new_score()
 
         # Pause before game restarts          
         screen.update()
@@ -287,9 +268,8 @@ def render():
         hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                   align="center", font=("Press Start 2p", 24, "normal"))
         
+        os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
-
-        new_score()
         
         # Pause before game restarts          
         screen.update()
