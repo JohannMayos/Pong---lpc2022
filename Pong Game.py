@@ -40,8 +40,8 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 0.5
-ball.dy = 0.5
+ball.dx = 0.7
+ball.dy = 0.7
 
 # score
 score_1 = 0
@@ -204,7 +204,7 @@ while True:
                   align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
         ball.dx = -1
-        ball.dy = 1
+        ball.dy = 0.7
         os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
@@ -216,6 +216,6 @@ while True:
                   align="center", font=("Press Start 2p", 24, "normal"))
         ball.goto(0, 0)
         ball.dx *= -1
-        ball.dy *= 1
+        ball.dy *= 0.7
         os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
