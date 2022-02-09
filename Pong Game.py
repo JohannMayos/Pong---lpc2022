@@ -1,7 +1,6 @@
 
 import turtle
 import winsound
-import os
 
 # draw screen
 screen = turtle.Screen()
@@ -164,7 +163,6 @@ while True:
         ball.dy *= -1
         ball.dx *= 1
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
-        os.system("afplay impact_sound.wav&")
 
     # collision with lower wall
     if ball.ycor() < -290:
@@ -172,18 +170,15 @@ while True:
         ball.dy *= -1
         ball.dx *= 1
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
-        os.system("afplay impact_sound.wav&")
 
     # collision with left wall
     if ball.xcor() < -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
         ball.dx *= -1
-        os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with right wall
     if ball.xcor() > 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
         ball.dx *= -1
-        os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 1
@@ -195,7 +190,6 @@ while True:
         ball.goto(0, 0)
         ball.dx = -1
         ball.dy = 1
-        os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 2
@@ -207,5 +201,4 @@ while True:
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 1
-        os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
