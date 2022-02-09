@@ -197,7 +197,7 @@ while True:
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 1
-    if ball.xcor() < -340:
+    if ball.xcor() < -343:
         score_2 += 1
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2),
@@ -209,7 +209,7 @@ while True:
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 2
-    if ball.xcor() > 340:
+    if ball.xcor() > 343:
         score_1 += 1
         hud.clear()
         hud.write("{} : {}" .format(score_1, score_2),
