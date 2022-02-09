@@ -43,8 +43,8 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 0.7
-ball.dy = 0.7
+ball.dx = 1
+ball.dy = 1
 
 # head-up display
 hud = turtle.Turtle()
@@ -213,9 +213,6 @@ def render():
     paddle_2_up()
     paddle_2_down()
 
-    # ball movement
-    start_game()
-
     # collision with the upper wall
     if ball.ycor() > 240:
         ball.sety(240)
@@ -230,19 +227,19 @@ def render():
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
         os.system("afplay impact_sound.wav&")
 
+    # collision with paddle_1
+    if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
+        ball.dx = 1
+        os.system("afplay impact_sound.wav&")
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+
+    # collision with paddle_2
+    if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
+        ball.dx = -1
+        os.system("afplay impact_sound.wav&")
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+
     # collision with left wall
-    if ball.xcor() < -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
-        ball.dx *= -1
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
-
-    # collision with right wall
-    if ball.xcor() > 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
-        ball.dx *= -1
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
-
-    # collision with the paddle 1
     if ball.xcor() < -375:
         ball.color("red")
         paddle_2.score += 1
@@ -259,12 +256,12 @@ def render():
         ball.color("white")
 
         ball.goto(0, 0)
-        ball.dx = -1
-        ball.dy = 0.7
+        ball.dx *= -1
+        ball.dy *= -1
 
         
 
-    # collision with the paddle 2
+    # collision with right wall
     if ball.xcor() > 375:
         ball.color("red")
         paddle_1.score += 1
@@ -282,7 +279,10 @@ def render():
 
         ball.goto(0, 0)
         ball.dx *= -1
-        ball.dy *= 0.7
+        ball.dy *= -1
+    
+    # ball movement
+    start_game()
 
 # Begin game with the timer
 timer()
