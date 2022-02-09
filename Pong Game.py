@@ -56,6 +56,14 @@ hud.hideturtle()
 hud.goto(0, 260)
 hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
 
+# winner crown
+winner = turtle.Turtle()
+winner.speed(0)
+winner.shape("square")
+winner.color("white")
+winner.penup()
+winner.hideturtle()
+
 # background up line
 up_line = turtle.Turtle()
 up_line.speed(0)
@@ -203,6 +211,19 @@ def timer():
     timer.clear()
 
 
+# change crown position
+def new_score():
+    if paddle_1.score == paddle_2.score:
+        winner.clear()
+    elif paddle_1.score < paddle_2.score:
+        winner.clear()
+        winner.goto(100, 265)
+        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
+    else:
+        winner.clear()
+        winner.goto(-100, 265)
+        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
+
 # render game
 def render():
     screen.update()
@@ -245,6 +266,8 @@ def render():
         
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
+        new_score()
+
         # Pause before game restarts          
         screen.update()
         time.sleep(1)
@@ -265,6 +288,8 @@ def render():
                   align="center", font=("Press Start 2p", 24, "normal"))
         
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+
+        new_score()
         
         # Pause before game restarts          
         screen.update()
