@@ -2,6 +2,7 @@
 import turtle
 import winsound
 import os
+import time
 
 # draw screen
 screen = turtle.Screen()
@@ -21,6 +22,7 @@ paddle_1.penup()
 paddle_1.goto(-350, 0)
 paddle_1.movingUp = False
 paddle_1.movingDown = False
+paddle_1.score = 0
 
 # draw paddle 2
 paddle_2 = turtle.Turtle()
@@ -32,6 +34,7 @@ paddle_2.penup()
 paddle_2.goto(350, 0)
 paddle_2.movingUp = False
 paddle_2.movingDown = False
+paddle_2.score = 0
 
 # draw ball
 ball = turtle.Turtle()
@@ -40,12 +43,8 @@ ball.shape("square")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 0.7
-ball.dy = 0.7
-
-# score
-score_1 = 0
-score_2 = 0
+ball.dx = 0.5
+ball.dy = 0.5
 
 # head-up display
 hud = turtle.Turtle()
@@ -158,7 +157,34 @@ screen.onkeypress(paddle_2_set_moving_down_true, "Down")
 screen.onkeyrelease(paddle_2_set_moving_up_false, "Up")
 screen.onkeyrelease(paddle_2_set_moving_down_false, "Down")
 
-while True:
+
+# timer before the game starts
+def timer():
+    timer = turtle.Turtle()
+    timer.speed(0)
+    timer.shape("square")
+    timer.color("white")
+    timer.penup()
+    timer.hideturtle()
+    timer.goto(0, 0)
+
+    timer.clear()
+    timer.write("3", align="center", font=("Press Start 2P", 40, "normal"))
+    time.sleep(1)
+    timer.clear()
+    timer.write("2", align="center", font=("Press Start 2P", 40, "normal"))
+    time.sleep(1)
+    timer.clear()
+    timer.write("1", align="center", font=("Press Start 2P", 40, "normal"))
+    time.sleep(1)
+    timer.clear()
+    timer.write("Go!", align="center", font=("Press Start 2P", 40, "normal"))
+    time.sleep(1)
+    timer.clear()
+
+
+# render game
+def render():
     screen.update()
 
     # paddles movement
@@ -197,25 +223,50 @@ while True:
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
     # collision with the paddle 1
-    if ball.xcor() < -343:
-        score_2 += 1
+    if ball.xcor() < -375:
+        ball.color("red")
+        paddle_2.score += 1
         hud.clear()
-        hud.write("{} : {}" .format(score_1, score_2),
+        hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                   align="center", font=("Press Start 2p", 24, "normal"))
-        ball.goto(0, 0)
-        ball.dx = -1
-        ball.dy = 0.7
+        
         os.system("afplay score_up_sound.wav&")
         winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
 
+        # Pause before game restarts          
+        screen.update()
+        time.sleep(1)
+        ball.color("white")
+
+        ball.goto(0, 0)
+        ball.dx = -1
+        ball.dy = 0.7
+
+        
+
     # collision with the paddle 2
-    if ball.xcor() > 343:
-        score_1 += 1
+    if ball.xcor() > 375:
+        ball.color("red")
+        paddle_1.score += 1
         hud.clear()
-        hud.write("{} : {}" .format(score_1, score_2),
+        hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                   align="center", font=("Press Start 2p", 24, "normal"))
+        
+        os.system("afplay score_up_sound.wav&")
+        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+        
+        # Pause before game restarts          
+        screen.update()
+        time.sleep(1)
+        ball.color("white")
+
         ball.goto(0, 0)
         ball.dx *= -1
         ball.dy *= 0.7
-        os.system("afplay score_up_sound.wav&")
-        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+
+# Begin game with the timer
+timer()
+
+# Game loop
+while True:
+    render()
