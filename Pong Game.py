@@ -56,6 +56,14 @@ hud.hideturtle()
 hud.goto(0, 260)
 hud.write("0 : 0", align="center", font=("Press Start 2P", 24, "normal"))
 
+# winner crown
+winner = turtle.Turtle()
+winner.speed(0)
+winner.shape("square")
+winner.color("white")
+winner.penup()
+winner.hideturtle()
+
 # background up line
 up_line = turtle.Turtle()
 up_line.speed(0)
@@ -205,6 +213,20 @@ def timer():
     timer.clear()
 
 
+# change crown position
+def new_score():
+    if paddle_1.score == paddle_2.score:
+        winner.clear()
+    elif paddle_1.score < paddle_2.score:
+        winner.clear()
+        winner.goto(100, 265)
+        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
+    else:
+        winner.clear()
+        winner.goto(-100, 265)
+        winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
+
+
 # render game
 def render():
     screen.update()
@@ -272,6 +294,8 @@ def render():
         ball.dx *= -1
         ball.dy *= -1
 
+        new_score()
+
     # collision with right wall
     if ball.xcor() > 375:
         ball.color("red")
@@ -292,6 +316,8 @@ def render():
         ball.dx = -1
         ball.dx *= -1
         ball.dy *= -1
+
+        new_score()
     
     # ball movement
     start_game()
