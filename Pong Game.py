@@ -64,6 +64,17 @@ winner.color("white")
 winner.penup()
 winner.hideturtle()
 
+# pause icon
+pause = turtle.Turtle()
+pause.speed(0)
+pause.shape("square")
+pause.color("white")
+pause.penup()
+pause.hideturtle()
+pause.goto(-300, 265)
+pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
+pause.status = False
+
 # background up line
 up_line = turtle.Turtle()
 up_line.speed(0)
@@ -172,6 +183,16 @@ def paddle_2_set_moving_down_true():
 def paddle_2_set_moving_down_false():
     paddle_2.movingDown = False
 
+# function to pause the game
+def pause_game():
+    pause.status = not pause.status
+    pause.clear()
+
+    if pause.status:
+        pause.write("Space - ⏯️", align="center", font=("Press Start 2P", 18, "normal"))
+    else:
+        pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
+
 
 # keyboard
 screen.listen()
@@ -212,17 +233,18 @@ def timer():
     time.sleep(1)
     timer.clear()
 
+    # enable pause
+    screen.onkeypress(pause_game, " ")
+
 
 # change crown position
 def new_score():
-    if paddle_1.score == paddle_2.score:
-        winner.clear()
-    elif paddle_1.score < paddle_2.score:
-        winner.clear()
+    winner.clear()
+
+    if paddle_1.score < paddle_2.score:
         winner.goto(100, 265)
         winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
-    else:
-        winner.clear()
+    elif paddle_1.score > paddle_2.score:
         winner.goto(-100, 265)
         winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
 
@@ -231,96 +253,97 @@ def new_score():
 def render():
     screen.update()
 
-    # paddles movement
-    paddle_1_up()
-    paddle_1_down()
-    paddle_2_up()
-    paddle_2_down()
+    if not pause.status:
+        # paddles movement
+        paddle_1_up()
+        paddle_1_down()
+        paddle_2_up()
+        paddle_2_down()
 
-    # collision with the upper wall
-    if ball.ycor() > 240:
-        ball.sety(240)
-        ball.dy *= -1
-        winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
+        # collision with the upper wall
+        if ball.ycor() > 240:
+            ball.sety(240)
+            ball.dy *= -1
+            winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
 
-    # collision with lower wall
-    if ball.ycor() < -280:
-        ball.sety(-280)
-        ball.dy *= -1
-        winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
+        # collision with lower wall
+        if ball.ycor() < -280:
+            ball.sety(-280)
+            ball.dy *= -1
+            winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
 
-    # collision with paddle_1
-    if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
-        ball.dx = 1
-        os.system("afplay hit_paddle.wav&")
-        winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
+        # collision with paddle_1
+        if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
+            ball.dx = 1
+            os.system("afplay hit_paddle.wav&")
+            winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
 
-    # Critic Strike with paddle_1
-    if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
-        ball.dx = 3
-        os.system("afplay critic_hit.wav&")
-        winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
+        # Critic Strike with paddle_1
+        if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
+            ball.dx = 3
+            os.system("afplay critic_hit.wav&")
+            winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
 
-    # collision with paddle_2
-    if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
-        ball.dx = -1
-        os.system("afplay hit_paddle.wav&")
-        winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
+        # collision with paddle_2
+        if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
+            ball.dx = -1
+            os.system("afplay hit_paddle.wav&")
+            winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
 
-    # Critic Strike with paddle_2
-    if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
-        ball.dx = -3
-        os.system("afplay critic_hit.wav&")
-        winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
+        # Critic Strike with paddle_2
+        if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
+            ball.dx = -3
+            os.system("afplay critic_hit.wav&")
+            winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
 
-    # collision with left wall
-    if ball.xcor() < -375:
-        ball.color("red")
-        paddle_2.score += 1
-        hud.clear()
-        hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
-                  align="center", font=("Press Start 2p", 24, "normal"))
+        # collision with left wall
+        if ball.xcor() < -375:
+            ball.color("red")
+            paddle_2.score += 1
+            hud.clear()
+            hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
+                    align="center", font=("Press Start 2p", 24, "normal"))
+            
+            os.system("afplay score_up_sound.wav&")
+            winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+
+            # Pause before game restarts          
+            screen.update()
+            time.sleep(1)
+            ball.color("white")
+
+            ball.goto(0, 0)
+            ball.dx = 1
+            ball.dx *= -1
+            ball.dy *= -1
+
+            new_score()
+
+        # collision with right wall
+        if ball.xcor() > 375:
+            ball.color("red")
+            paddle_1.score += 1
+            hud.clear()
+            hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
+                    align="center", font=("Press Start 2p", 24, "normal"))
+            
+            os.system("afplay score_up_sound.wav&")
+            winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+            
+            # Pause before game restarts          
+            screen.update()
+            time.sleep(1)
+            ball.color("white")
+
+            ball.goto(0, 0)
+            ball.dx = -1
+            ball.dx *= -1
+            ball.dy *= -1
+
+            new_score()
         
-        os.system("afplay score_up_sound.wav&")
-        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
-
-        # Pause before game restarts          
-        screen.update()
-        time.sleep(1)
-        ball.color("white")
-
-        ball.goto(0, 0)
-        ball.dx = 1
-        ball.dx *= -1
-        ball.dy *= -1
-
-        new_score()
-
-    # collision with right wall
-    if ball.xcor() > 375:
-        ball.color("red")
-        paddle_1.score += 1
-        hud.clear()
-        hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
-                  align="center", font=("Press Start 2p", 24, "normal"))
-        
-        os.system("afplay score_up_sound.wav&")
-        winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
-        
-        # Pause before game restarts          
-        screen.update()
-        time.sleep(1)
-        ball.color("white")
-
-        ball.goto(0, 0)
-        ball.dx = -1
-        ball.dx *= -1
-        ball.dy *= -1
-
-        new_score()
-    
-    # ball movement
-    start_game()
+        # ball movement
+        start_game()
 
 
 # Begin game with the timer
