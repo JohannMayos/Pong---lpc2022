@@ -219,37 +219,37 @@ def render():
     if ball.ycor() > 240:
         ball.sety(240)
         ball.dy *= -1
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
 
     # collision with lower wall
     if ball.ycor() < -280:
         ball.sety(-280)
         ball.dy *= -1
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
 
     # collision with paddle_1
     if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
         ball.dx = 1
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        os.system("afplay hit_paddle.wav&")
+        winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
 
     # Critic Strike with paddle_1
     if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
         ball.dx = 3
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        os.system("afplay critic_hit.wav&")
+        winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
 
     # collision with paddle_2
     if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
         ball.dx = -1
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        os.system("afplay hit_paddle.wav&")
+        winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
 
     # Critic Strike with paddle_2
     if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
         ball.dx = -3
-        os.system("afplay impact_sound.wav&")
-        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+        os.system("afplay critic_hit.wav&")
+        winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
 
     # collision with left wall
     if ball.xcor() < -375:
