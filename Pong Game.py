@@ -77,6 +77,7 @@ for i in range(10):
     middle_lines[i].goto(0, 212 - (i*55))
     middle_lines[i].shapesize(stretch_wid=2, stretch_len=0.5)
 
+
 # starting the game method
 def start_game():
     ball_movement()
@@ -232,9 +233,21 @@ def render():
         os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
+    # Critic Strike with paddle_1
+    if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
+        ball.dx = 3
+        os.system("afplay impact_sound.wav&")
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+
     # collision with paddle_2
     if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
         ball.dx = -1
+        os.system("afplay impact_sound.wav&")
+        winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
+
+    # Critic Strike with paddle_2
+    if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
+        ball.dx = -3
         os.system("afplay impact_sound.wav&")
         winsound.PlaySound("impact_sound.wav", winsound.SND_ASYNC)
 
@@ -255,10 +268,9 @@ def render():
         ball.color("white")
 
         ball.goto(0, 0)
+        ball.dx = 1
         ball.dx *= -1
         ball.dy *= -1
-
-        
 
     # collision with right wall
     if ball.xcor() > 375:
@@ -277,11 +289,13 @@ def render():
         ball.color("white")
 
         ball.goto(0, 0)
+        ball.dx = -1
         ball.dx *= -1
         ball.dy *= -1
     
     # ball movement
     start_game()
+
 
 # Begin game with the timer
 timer()
