@@ -190,9 +190,11 @@ def pause_game():
 
     if pause.status:
         pause.write("Space - ⏯️", align="center", font=("Press Start 2P", 18, "normal"))
+        winsound.PlaySound("pause_on.wav", winsound.SND_ASYNC)
+
     else:
         pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
-
+        winsound.PlaySound("pause_off.wav", winsound.SND_ASYNC)
 
 # keyboard
 screen.listen()
