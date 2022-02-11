@@ -3,6 +3,7 @@ import turtle
 import winsound
 import os
 import time
+import pygame
 
 # draw screen
 screen = turtle.Screen()
@@ -100,6 +101,13 @@ for i in range(10):
 # starting the game method
 def start_game():
     ball_movement()
+
+
+def play_soundtrack():
+    pygame.init()
+    soundtrack_1 = pygame.mixer.music.load('tetris.ogg')
+    soundtrack_2 = pygame.mixer.music.load('megalovania.ogg')
+    pygame.mixer.music.play(-1)
 
 
 # ball movement method
@@ -347,9 +355,10 @@ def render():
         # ball movement
         start_game()
 
-
 # Begin game with the timer
 timer()
+
+play_soundtrack()
 
 # Game loop
 while True:
