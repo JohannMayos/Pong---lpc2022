@@ -105,9 +105,8 @@ def start_game():
 
 def play_soundtrack():
     pygame.init()
-    soundtrack_1 = pygame.mixer.music.load('tetris.ogg')
     soundtrack_2 = pygame.mixer.music.load('megalovania.ogg')
-    pygame.mixer.music.play(-1)
+    pygame.mixer.music.play()
 
 
 # ball movement method
