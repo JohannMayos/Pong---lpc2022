@@ -103,11 +103,16 @@ def start_game():
     ball_movement()
 
 
+# play soundtracks
 def play_soundtrack():
-    pygame.init()
     soundtrack_2 = pygame.mixer.music.load('megalovania.ogg')
     pygame.mixer.music.play()
 
+
+# play interaction sounds
+def play_sound_interaction(sound):
+    interaction = pygame.mixer.Sound(sound)
+    interaction.play()
 
 # ball movement method
 def ball_movement():
@@ -197,11 +202,13 @@ def pause_game():
 
     if pause.status:
         pause.write("Space - ⏯️", align="center", font=("Press Start 2P", 18, "normal"))
-        winsound.PlaySound("pause_on.wav", winsound.SND_ASYNC)
+        play_sound_interaction("pause_on.wav")
+        pygame.mixer.music.pause()
 
     else:
         pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
-        winsound.PlaySound("pause_off.wav", winsound.SND_ASYNC)
+        play_sound_interaction("pause_off.wav")
+        pygame.mixer.music.unpause()
 
 # keyboard
 screen.listen()
@@ -227,7 +234,9 @@ def timer():
     timer.hideturtle()
     timer.goto(0, 0)
 
-    winsound.PlaySound("simple_game_countdown.wav", winsound.SND_ASYNC)
+    
+    pygame.init()
+    play_sound_interaction("simple_game_countdown.wav")
     timer.clear()
     timer.write("3", align="center", font=("Press Start 2P", 40, "normal"))
     time.sleep(1)
@@ -273,37 +282,33 @@ def render():
         if ball.ycor() > 240:
             ball.sety(240)
             ball.dy *= -1
-            winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
+            play_sound_interaction("hit_wall.wav")
 
         # collision with lower wall
         if ball.ycor() < -280:
             ball.sety(-280)
             ball.dy *= -1
-            winsound.PlaySound("hit_wall.wav", winsound.SND_ASYNC)
+            play_sound_interaction("hit_wall.wav")
 
         # collision with paddle_1
         if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
             ball.dx = 1
-            os.system("afplay hit_paddle.wav&")
-            winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
+            play_sound_interaction("hit_paddle.wav")
 
         # Critic Strike with paddle_1
         if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
             ball.dx = 3
-            os.system("afplay critic_hit.wav&")
-            winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
+            play_sound_interaction("critic_hit.wav")
 
         # collision with paddle_2
         if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
             ball.dx = -1
-            os.system("afplay hit_paddle.wav&")
-            winsound.PlaySound("hit_paddle.wav", winsound.SND_ASYNC)
+            play_sound_interaction("hit_paddle.wav")
 
         # Critic Strike with paddle_2
         if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
             ball.dx = -3
-            os.system("afplay critic_hit.wav&")
-            winsound.PlaySound("critic_hit.wav", winsound.SND_ASYNC)
+            play_sound_interaction("critic_hit.wav")
 
         # collision with left wall
         if ball.xcor() < -375:
@@ -313,8 +318,7 @@ def render():
             hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                     align="center", font=("Press Start 2p", 24, "normal"))
             
-            os.system("afplay score_up_sound.wav&")
-            winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+            play_sound_interaction("score_up_sound.wav")
 
             # Pause before game restarts          
             screen.update()
@@ -336,8 +340,7 @@ def render():
             hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
                     align="center", font=("Press Start 2p", 24, "normal"))
             
-            os.system("afplay score_up_sound.wav&")
-            winsound.PlaySound("score_up_sound.wav", winsound.SND_ASYNC)
+            play_sound_interaction("score_up_sound.wav")
             
             # Pause before game restarts          
             screen.update()
