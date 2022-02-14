@@ -15,6 +15,9 @@ def run_game():
     screen.setup(width=800, height=600)
     screen.tracer(0)
 
+    # window dialog to get max score
+    max_score = int(screen.textinput("Bem-vindo ao Pong!", "Qual o número máximo de pontos?"))
+
 
     # draw paddle 1
     paddle_1 = turtle.Turtle()
@@ -231,17 +234,19 @@ def run_game():
 
     # function of test the win condition
     def win_condition():
-        if paddle_1.score == 5:
-            victory.write("Player 1 Wins. Continue? y -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
+        if paddle_1.score == max_score:
+            
             pause.status = not pause.status
             pygame.mixer.music.pause()
             play_sound_interaction("victory_sound.wav")
 
+            victory.write("Player 1 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
+
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
             
-        elif paddle_2.score == 5:
-            victory.write("Player 2 Wins. Continue? y -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
+        elif paddle_2.score == max_score:
+            victory.write("Player 2 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
 
             pause.status = not pause.status
             pygame.mixer.music.pause()
@@ -293,7 +298,7 @@ def run_game():
         timer.clear()
 
         # enable pause
-        screen.onkeypress(pause_game, " ")
+        screen.onkeypress(pause_game, "space")
 
 
     # change crown position
