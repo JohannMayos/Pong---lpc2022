@@ -201,15 +201,17 @@ def run_game():
 
     # function to pause the game
     def pause_game():
-        pause.status = not pause.status
+        if paddle_1.score != max_score and paddle_2.score != max_score:
+            pause.status = not pause.status
         pause.clear()
 
-        if pause.status:
+        # game pauses only if it isn't over yet
+        if pause.status and paddle_1.score != max_score and paddle_2.score != max_score:
             pause.showturtle()
             play_sound_interaction("pause_on.wav")
             pygame.mixer.music.pause()
 
-        else:
+        elif paddle_1.score != max_score and paddle_2.score != max_score:
             pause.hideturtle()
             play_sound_interaction("pause_off.wav")
             pygame.mixer.music.unpause()
@@ -246,7 +248,7 @@ def run_game():
             # Screen of the winner
             win_square = turtle.Turtle()
             win_square.shape('Winner_2.gif')
-            win_square.goto(0, 0)
+            win_square.goto(0, 30)
 
             victory.showturtle()
 
