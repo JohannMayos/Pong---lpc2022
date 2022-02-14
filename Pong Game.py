@@ -16,6 +16,8 @@ def run_game():
 
     screen.addshape('Winner.gif')
     screen.addshape('Winner_2.gif')
+    screen.addshape('pause.gif')
+    screen.addshape('replay.gif')
 
     # window dialog to get max score
     max_score = int(screen.textinput("Bem-vindo ao Pong!", "Qual o número máximo de pontos?"))
@@ -76,19 +78,15 @@ def run_game():
     # pause icon
     pause = turtle.Turtle()
     pause.speed(0)
-    pause.shape("square")
-    pause.color("white")
-    pause.penup()
+    pause.shape('pause.gif')
     pause.hideturtle()
     pause.status = False
 
     # victory text
     victory = turtle.Turtle()
-    victory.speed(0)
-    victory.shape("square")
-    victory.color("red")
+    victory.shape('replay.gif')
     victory.penup()
-    victory.goto(0, 100)
+    victory.goto(0, -200)
     victory.hideturtle()
 
     # starting the game method
@@ -207,12 +205,12 @@ def run_game():
         pause.clear()
 
         if pause.status:
-            pause.write("Space - ⏯️", align="center", font=("Press Start 2P", 18, "normal"))
+            pause.showturtle()
             play_sound_interaction("pause_on.wav")
             pygame.mixer.music.pause()
 
         else:
-            pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
+            pause.hideturtle()
             play_sound_interaction("pause_off.wav")
             pygame.mixer.music.unpause()
 
@@ -226,13 +224,13 @@ def run_game():
             play_sound_interaction("victory_sound.wav")
 
             hide_itens()
-            
+
             # Screen of the winner
             win_square = turtle.Turtle()
             win_square.shape('Winner.gif')
             win_square.goto(0, 0)
 
-            victory.write("Player 1 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
+            victory.showturtle()
 
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
@@ -250,7 +248,7 @@ def run_game():
             win_square.shape('Winner_2.gif')
             win_square.goto(0, 0)
 
-            victory.write("Player 2 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
+            victory.showturtle()
 
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
