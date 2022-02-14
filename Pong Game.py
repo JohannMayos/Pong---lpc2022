@@ -130,7 +130,7 @@ def run_game():
         if paddle_1.movingUp:
 
             if y < 190:
-                y += 1
+                y += 1.7
 
         paddle_1.sety(y)
 
@@ -149,7 +149,7 @@ def run_game():
         if paddle_1.movingDown:
 
             if y > -250:
-                y -= 1
+                y -= 1.7
 
         paddle_1.sety(y)
 
@@ -168,7 +168,7 @@ def run_game():
         if paddle_2.movingUp:
 
             if y < 190:
-                y += 1
+                y += 1.7
 
         paddle_2.sety(y)
 
@@ -187,7 +187,7 @@ def run_game():
         if paddle_2.movingDown:
 
             if y > -250:
-                y -= 1
+                y -= 1.7
 
         paddle_2.sety(y)
 
@@ -415,5 +415,6 @@ def run_game():
 
     while True:
         render()
+        time.sleep(0.002)
 
 run_game()
