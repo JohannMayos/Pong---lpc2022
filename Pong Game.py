@@ -1,4 +1,3 @@
-
 import turtle
 import time
 import pygame
@@ -20,8 +19,8 @@ def run_game():
     screen.addshape('replay.gif')
 
     # window dialog to get max score
-    max_score = int(screen.textinput("Bem-vindo ao Pong!", "Qual o número máximo de pontos?"))
-
+    max_score = int(screen.textinput("Bem-vindo ao Pong!",
+                    "Qual o número máximo de pontos?"))
 
     # draw paddle 1
     paddle_1 = turtle.Turtle()
@@ -93,27 +92,27 @@ def run_game():
     def start_game():
         ball_movement()
 
-    
     # clear and reset game method
+
     def clear_game():
         screen.clearscreen()
         run_game()
 
-
     # Hide paddles and ball
+
     def hide_itens():
         paddle_1.hideturtle()
         paddle_2.hideturtle()
         ball.hideturtle()
 
-
     # play soundtracks
+
     def play_soundtrack():
         soundtrack_2 = pygame.mixer.music.load('megalovania.ogg')
         pygame.mixer.music.play()
 
-
     # play interaction sounds
+
     def play_sound_interaction(sound):
         interaction = pygame.mixer.Sound(sound)
         interaction.play()
@@ -122,7 +121,6 @@ def run_game():
     def ball_movement():
         ball.setx(ball.xcor() + ball.dx)
         ball.sety(ball.ycor() + ball.dy)
-
 
     def paddle_1_up():
         y = paddle_1.ycor()
@@ -134,14 +132,11 @@ def run_game():
 
         paddle_1.sety(y)
 
-
     def paddle_1_set_moving_up_true():
         paddle_1.movingUp = True
 
-
     def paddle_1_set_moving_up_false():
         paddle_1.movingUp = False
-
 
     def paddle_1_down():
         y = paddle_1.ycor()
@@ -153,14 +148,11 @@ def run_game():
 
         paddle_1.sety(y)
 
-
     def paddle_1_set_moving_down_true():
         paddle_1.movingDown = True
 
-
     def paddle_1_set_moving_down_false():
         paddle_1.movingDown = False
-
 
     def paddle_2_up():
         y = paddle_2.ycor()
@@ -172,14 +164,11 @@ def run_game():
 
         paddle_2.sety(y)
 
-
     def paddle_2_set_moving_up_true():
         paddle_2.movingUp = True
 
-
     def paddle_2_set_moving_up_false():
         paddle_2.movingUp = False
-
 
     def paddle_2_down():
         y = paddle_2.ycor()
@@ -191,10 +180,8 @@ def run_game():
 
         paddle_2.sety(y)
 
-
     def paddle_2_set_moving_down_true():
         paddle_2.movingDown = True
-
 
     def paddle_2_set_moving_down_false():
         paddle_2.movingDown = False
@@ -206,7 +193,8 @@ def run_game():
         pause.clear()
 
         # game pauses only if it isn't over yet
-        if pause.status and paddle_1.score != max_score and paddle_2.score != max_score:
+        if (pause.status and paddle_1.score != max_score and
+                paddle_2.score != max_score):
             pause.showturtle()
             play_sound_interaction("pause_on.wav")
             pygame.mixer.music.pause()
@@ -216,11 +204,11 @@ def run_game():
             play_sound_interaction("pause_off.wav")
             pygame.mixer.music.unpause()
 
-
     # function of test the win condition
+
     def win_condition():
         if paddle_1.score == max_score:
-            
+
             pause.status = not pause.status
             pygame.mixer.music.pause()
             play_sound_interaction("victory_sound.wav")
@@ -236,7 +224,7 @@ def run_game():
 
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
-            
+
         elif paddle_2.score == max_score:
 
             pause.status = not pause.status
@@ -255,7 +243,6 @@ def run_game():
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
 
-
     # keyboard
     screen.listen()
     screen.onkeypress(paddle_1_set_moving_up_true, "w")
@@ -263,14 +250,13 @@ def run_game():
     screen.onkeyrelease(paddle_1_set_moving_up_false, "w")
     screen.onkeyrelease(paddle_1_set_moving_down_false, "s")
 
-
     screen.onkeypress(paddle_2_set_moving_up_true, "Up")
     screen.onkeypress(paddle_2_set_moving_down_true, "Down")
     screen.onkeyrelease(paddle_2_set_moving_up_false, "Up")
     screen.onkeyrelease(paddle_2_set_moving_down_false, "Down")
 
-
     # timer before the game starts
+
     def timer():
         timer = turtle.Turtle()
         timer.speed(0)
@@ -280,7 +266,6 @@ def run_game():
         timer.hideturtle()
         timer.goto(0, 0)
 
-        
         pygame.init()
         play_sound_interaction("simple_game_countdown.wav")
         timer.clear()
@@ -293,7 +278,8 @@ def run_game():
         timer.write("1", align="center", font=("Press Start 2P", 40, "normal"))
         time.sleep(1)
         timer.clear()
-        timer.write("Go!", align="center", font=("Press Start 2P", 40, "normal"))
+        timer.write("Go!", align="center", font=(
+            "Press Start 2P", 40, "normal"))
         time.sleep(1)
         timer.clear()
 
@@ -303,20 +289,22 @@ def run_game():
         # Change screen background
         screen.bgpic('background.gif')
 
-
     # change crown position
+
     def new_score():
         winner.clear()
 
         if paddle_1.score < paddle_2.score:
             winner.goto(100, 265)
-            winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
+            winner.write("👑", align="center", font=(
+                "Press Start 2P", 24, "normal"))
         elif paddle_1.score > paddle_2.score:
             winner.goto(-100, 265)
-            winner.write("👑", align="center", font=("Press Start 2P", 24, "normal"))
-
+            winner.write("👑", align="center", font=(
+                "Press Start 2P", 24, "normal"))
 
     # render game
+
     def render():
         screen.update()
 
@@ -340,22 +328,26 @@ def run_game():
                 play_sound_interaction("hit_wall.wav")
 
             # collision with paddle_1
-            if ball.xcor() == -335 and paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75:
+            if (ball.xcor() == -335 and
+                    paddle_1.ycor() + 75 > ball.ycor() > paddle_1.ycor() - 75):
                 ball.dx = 1
                 play_sound_interaction("hit_paddle.wav")
 
             # Critic Strike with paddle_1
-            if ball.xcor() == -325 and paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25:
+            if (ball.xcor() == -325 and
+                    paddle_1.ycor() + 25 > ball.ycor() > paddle_1.ycor() - 25):
                 ball.dx = 3
                 play_sound_interaction("critic_hit.wav")
 
             # collision with paddle_2
-            if ball.xcor() == 335 and paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75:
+            if (ball.xcor() == 335 and
+                    paddle_2.ycor() + 75 > ball.ycor() > paddle_2.ycor() - 75):
                 ball.dx = -1
                 play_sound_interaction("hit_paddle.wav")
 
             # Critic Strike with paddle_2
-            if ball.xcor() == 325 and paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25:
+            if (ball.xcor() == 325 and
+                    paddle_2.ycor() + 25 > ball.ycor() > paddle_2.ycor() - 25):
                 ball.dx = -3
                 play_sound_interaction("critic_hit.wav")
 
@@ -365,12 +357,13 @@ def run_game():
                 paddle_2.score += 1
                 hud.clear()
                 hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
-                        align="center", font=("Press Start 2p", 24, "normal"))
-                
+                          align="center",
+                          font=("Press Start 2p", 24, "normal"))
+
                 play_sound_interaction("score_up_sound.wav")
                 win_condition()
 
-                # Pause before game restarts          
+                # Pause before game restarts
                 screen.update()
                 time.sleep(1)
                 ball.color("white")
@@ -388,12 +381,13 @@ def run_game():
                 paddle_1.score += 1
                 hud.clear()
                 hud.write("{} : {}" .format(paddle_1.score, paddle_2.score),
-                        align="center", font=("Press Start 2p", 24, "normal"))
-                
+                          align="center",
+                          font=("Press Start 2p", 24, "normal"))
+
                 play_sound_interaction("score_up_sound.wav")
                 win_condition()
-                
-                # Pause before game restarts          
+
+                # Pause before game restarts
                 screen.update()
                 time.sleep(1)
                 ball.color("white")
@@ -404,10 +398,9 @@ def run_game():
                 ball.dy *= -1
 
                 new_score()
-            
+
             # ball movement
             start_game()
-    
 
     timer()
 
@@ -416,5 +409,6 @@ def run_game():
     while True:
         render()
         time.sleep(0.002)
+
 
 run_game()
