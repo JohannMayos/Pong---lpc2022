@@ -7,13 +7,15 @@ import pygame
 # start game loop
 def run_game():
 
-
     # draw screen
     screen = turtle.Screen()
     screen.title("Pong")
     screen.bgcolor("black")
     screen.setup(width=800, height=600)
     screen.tracer(0)
+
+    screen.addshape('Winner.gif')
+    screen.addshape('Winner_2.gif')
 
     # window dialog to get max score
     max_score = int(screen.textinput("Bem-vindo ao Pong!", "Qual o número máximo de pontos?"))
@@ -78,8 +80,6 @@ def run_game():
     pause.color("white")
     pause.penup()
     pause.hideturtle()
-    pause.goto(-300, 265)
-    pause.write("Space - ⏸️", align="center", font=("Press Start 2P", 18, "normal"))
     pause.status = False
 
     # victory text
@@ -91,28 +91,6 @@ def run_game():
     victory.goto(0, 100)
     victory.hideturtle()
 
-    # background up line
-    up_line = turtle.Turtle()
-    up_line.speed(0)
-    up_line.shape("square")
-    up_line.color("white")
-    up_line.penup()
-    up_line.goto(0, 250)
-    up_line.shapesize(stretch_wid=0.5, stretch_len=40)
-
-    # background middle lines
-    middle_lines = []
-
-    for i in range(10):
-        middle_lines.append(turtle.Turtle())
-        middle_lines[i].speed(0)
-        middle_lines[i].shape("square")
-        middle_lines[i].color("white")
-        middle_lines[i].penup()
-        middle_lines[i].goto(0, 212 - (i*55))
-        middle_lines[i].shapesize(stretch_wid=2, stretch_len=0.5)
-
-
     # starting the game method
     def start_game():
         ball_movement()
@@ -122,6 +100,13 @@ def run_game():
     def clear_game():
         screen.clearscreen()
         run_game()
+
+
+    # Hide paddles and ball
+    def hide_itens():
+        paddle_1.hideturtle()
+        paddle_2.hideturtle()
+        ball.hideturtle()
 
 
     # play soundtracks
@@ -240,17 +225,32 @@ def run_game():
             pygame.mixer.music.pause()
             play_sound_interaction("victory_sound.wav")
 
+            hide_itens()
+            
+            # Screen of the winner
+            win_square = turtle.Turtle()
+            win_square.shape('Winner.gif')
+            win_square.goto(0, 0)
+
             victory.write("Player 1 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
 
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
             
         elif paddle_2.score == max_score:
-            victory.write("Player 2 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
 
             pause.status = not pause.status
             pygame.mixer.music.pause()
             play_sound_interaction("victory_sound.wav")
+
+            hide_itens()
+
+            # Screen of the winner
+            win_square = turtle.Turtle()
+            win_square.shape('Winner_2.gif')
+            win_square.goto(0, 0)
+
+            victory.write("Player 2 Wins. Continue?\ny -> Yes n -> No ", align="center", font=("Press Start 2P", 25, "normal"))
 
             screen.onkeypress(clear_game, "y")
             screen.onkeypress(screen.bye, "n")
@@ -299,6 +299,9 @@ def run_game():
 
         # enable pause
         screen.onkeypress(pause_game, "space")
+
+        # Change screen background
+        screen.bgpic('background.gif')
 
 
     # change crown position
